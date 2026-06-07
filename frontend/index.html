@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Powered College and Placement Assistant using Gemma 3 - Smart academic guidance, placement support, and career management">
+    <title>CampusAI — College & Placement Assistant</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="orb"></div><div class="orb"></div><div class="orb"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="sidebar-header">
+                <div class="logo-icon">🎓</div>
+                <div class="logo-text">
+                    <h1>CampusAI</h1>
+                    <p>Powered by Gemma 3</p>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title sidebar-label">Main</div>
+                    <a class="nav-item active" data-page="dashboard" id="nav-dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                        <span class="sidebar-label">Dashboard</span>
+                    </a>
+                    <a class="nav-item" data-page="chat" id="nav-chat">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                        <span class="sidebar-label">AI Chat</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title sidebar-label">Tools</div>
+                    <a class="nav-item" data-page="documents" id="nav-documents">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <span class="sidebar-label">Documents</span>
+                    </a>
+                    <a class="nav-item" data-page="resume" id="nav-resume">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+                        <span class="sidebar-label">Resume Analyzer</span>
+                    </a>
+                    <a class="nav-item" data-page="eligibility" id="nav-eligibility">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span class="sidebar-label">Eligibility Check</span>
+                    </a>
+                    <a class="nav-item" data-page="interview" id="nav-interview">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <span class="sidebar-label">Interview Prep</span>
+                    </a>
+                    <a class="nav-item" data-page="career" id="nav-career">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                        <span class="sidebar-label">Career Guidance</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title sidebar-label">Admin</div>
+                    <a class="nav-item" data-page="students" id="nav-students">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                        <span class="sidebar-label">Students</span>
+                    </a>
+                    <a class="nav-item" data-page="companies" id="nav-companies">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+                        <span class="sidebar-label">Companies</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="status">
+                    <span class="status-dot" id="aiStatus"></span>
+                    <p class="sidebar-label" id="aiStatusText">Checking AI...</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div class="page-section active" id="page-dashboard">
+                <div class="content-header">
+                    <div><h2>Dashboard</h2><p>Overview of placement activities & statistics</p></div>
+                </div>
+                <div class="content-body">
+                    <div class="welcome-hero">
+                        <h1>Welcome to <span>CampusAI</span></h1>
+                        <p>Your AI-powered assistant for academics, placements, career guidance, and more — powered by Gemma 3</p>
+                        <div class="quick-actions">
+                            <div class="quick-action" onclick="navigateTo('chat')"><div class="qa-icon">💬</div><div class="qa-title">Ask AI</div><div class="qa-desc">Chat about anything</div></div>
+                            <div class="quick-action" onclick="navigateTo('resume')"><div class="qa-icon">📝</div><div class="qa-title">Analyze Resume</div><div class="qa-desc">Get AI feedback</div></div>
+                            <div class="quick-action" onclick="navigateTo('eligibility')"><div class="qa-icon">✅</div><div class="qa-title">Check Eligibility</div><div class="qa-desc">Company matching</div></div>
+                            <div class="quick-action" onclick="navigateTo('interview')"><div class="qa-icon">🎯</div><div class="qa-title">Interview Prep</div><div class="qa-desc">Practice questions</div></div>
+                            <div class="quick-action" onclick="navigateTo('career')"><div class="qa-icon">🧭</div><div class="qa-title">Career Guide</div><div class="qa-desc">Personalized path</div></div>
+                        </div>
+                    </div>
+                    <div class="stats-grid" id="statsGrid">
+                        <div class="stat-card"><div class="stat-icon" style="background:rgba(99,102,241,0.15);color:var(--accent)">👥</div><div class="stat-value" id="statStudents">—</div><div class="stat-label">Total Students</div></div>
+                        <div class="stat-card"><div class="stat-icon" style="background:rgba(34,197,94,0.15);color:var(--success)">✅</div><div class="stat-value" id="statPlaced">—</div><div class="stat-label">Students Placed</div></div>
+                        <div class="stat-card"><div class="stat-icon" style="background:rgba(6,182,212,0.15);color:var(--info)">🏢</div><div class="stat-value" id="statCompanies">—</div><div class="stat-label">Companies</div></div>
+                        <div class="stat-card"><div class="stat-icon" style="background:rgba(245,158,11,0.15);color:var(--warning)">💰</div><div class="stat-value" id="statPackage">—</div><div class="stat-label">Highest Package (LPA)</div></div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card"><div class="card-header"><span class="card-title">Department-wise Placements</span></div><div id="deptStats"></div></div>
+                        <div class="card"><div class="card-header"><span class="card-title">Upcoming Drives</span></div><div id="upcomingDrives"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Page -->
+            <div class="page-section" id="page-chat">
+                <div class="content-header">
+                    <div><h2>AI Chat Assistant</h2><p>Ask anything about academics, placements, or career</p></div>
+                    <div class="header-actions"><button class="btn btn-secondary" onclick="clearChat()">Clear Chat</button></div>
+                </div>
+                <div class="content-body">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="chat-message assistant">
+                                <div class="avatar">🎓</div>
+                                <div class="chat-bubble">
+                                    <p><strong>Hello!</strong> I'm CampusAI, your college & placement assistant.</p>
+                                    <p>I can help you with:</p>
+                                    <ul>
+                                        <li>📚 Academic information & regulations</li>
+                                        <li>💼 Placement queries & company details</li>
+                                        <li>📝 Resume tips & analysis</li>
+                                        <li>🎯 Interview preparation</li>
+                                        <li>🧭 Career guidance</li>
+                                    </ul>
+                                    <p>How can I help you today?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <div class="chat-input-wrapper">
+                                <textarea id="chatInput" placeholder="Ask me anything about your college, placements, career..." rows="1"></textarea>
+                            </div>
+                            <button class="btn-icon" id="chatSendBtn" onclick="sendChat()">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Page -->
+            <div class="page-section" id="page-documents">
+                <div class="content-header"><div><h2>Document Management</h2><p>Upload college documents for AI-powered Q&A</p></div></div>
+                <div class="content-body">
+                    <div class="card" style="margin-bottom:20px;">
+                        <div class="upload-area" id="docUploadArea">
+                            <div class="upload-icon">📁</div>
+                            <p class="upload-text"><strong>Drop documents here</strong> or click to browse</p>
+                            <p style="font-size:12px;color:var(--text-muted);margin-top:8px">Supports PDF, DOCX, TXT files</p>
+                            <input type="file" id="docFileInput" accept=".pdf,.docx,.txt,.md,.csv" style="display:none" multiple>
+                        </div>
+                        <div id="uploadProgress" style="margin-top:12px;display:none">
+                            <div class="progress-bar"><div class="progress-fill good" id="uploadBar" style="width:0%"></div></div>
+                            <p style="font-size:12px;color:var(--text-muted);margin-top:6px" id="uploadStatus"></p>
+                        </div>
+                    </div>
+                    <div class="card"><div class="card-header"><span class="card-title">Uploaded Documents</span><span class="badge badge-info" id="docCount">0</span></div>
+                        <div id="docList"><p style="color:var(--text-muted);font-size:14px;text-align:center;padding:20px">No documents uploaded yet</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resume Analyzer Page -->
+            <div class="page-section" id="page-resume">
+                <div class="content-header"><div><h2>Resume Analyzer</h2><p>Get AI-powered feedback on your resume</p></div></div>
+                <div class="content-body">
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-header"><span class="card-title">Upload Resume</span></div>
+                            <div class="upload-area" id="resumeUploadArea">
+                                <div class="upload-icon">📄</div>
+                                <p class="upload-text"><strong>Drop your resume</strong> or click to browse</p>
+                                <p style="font-size:12px;color:var(--text-muted);margin-top:8px">PDF, DOCX, or TXT</p>
+                                <input type="file" id="resumeFileInput" accept=".pdf,.docx,.txt" style="display:none">
+                            </div>
+                            <div id="resumeAnalyzing" style="display:none;text-align:center;padding:30px">
+                                <div class="spinner"></div>
+                                <p style="color:var(--text-secondary);margin-top:12px">Analyzing your resume with AI...</p>
+                            </div>
+                        </div>
+                        <div class="card" id="resumeResults" style="display:none">
+                            <div class="card-header"><span class="card-title">Analysis Results</span></div>
+                            <div id="resumeScoreArea"></div>
+                        </div>
+                    </div>
+                    <div class="card" id="resumeAIFeedback" style="display:none;margin-top:20px">
+                        <div class="card-header"><span class="card-title">🤖 AI Feedback</span></div>
+                        <div id="aiFeedbackContent" class="ai-response"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eligibility Check Page -->
+            <div class="page-section" id="page-eligibility">
+                <div class="content-header"><div><h2>Placement Eligibility</h2><p>Check which companies you're eligible for</p></div></div>
+                <div class="content-body">
+                    <div class="card" style="margin-bottom:20px">
+                        <div style="display:flex;gap:12px;align-items:flex-end">
+                            <div class="form-group" style="flex:1;margin-bottom:0">
+                                <label class="form-label">Enter Roll Number</label>
+                                <input class="form-input" id="eligRollInput" placeholder="e.g. CS2021001">
+                            </div>
+                            <button class="btn btn-primary" onclick="checkEligibility()" id="eligCheckBtn">Check Eligibility</button>
+                        </div>
+                    </div>
+                    <div id="eligResults"></div>
+                </div>
+            </div>
+
+            <!-- Interview Prep Page -->
+            <div class="page-section" id="page-interview">
+                <div class="content-header"><div><h2>Interview Preparation</h2><p>AI-generated practice questions & tips</p></div></div>
+                <div class="content-body">
+                    <div class="card" style="margin-bottom:20px">
+                        <div class="card-header"><span class="card-title">Generate Practice Material</span></div>
+                        <div class="grid-2">
+                            <div class="form-group"><label class="form-label">Company</label><input class="form-input" id="intCompany" placeholder="e.g. TCS, Infosys, Google"></div>
+                            <div class="form-group"><label class="form-label">Role</label><input class="form-input" id="intRole" placeholder="e.g. Software Developer"></div>
+                        </div>
+                        <div class="form-group"><label class="form-label">Your Skills (comma separated)</label><input class="form-input" id="intSkills" placeholder="Python, Java, SQL, React"></div>
+                        <div class="form-group"><label class="form-label">Level</label>
+                            <select class="form-select" id="intLevel"><option value="fresher">Fresher</option><option value="intern">Intern</option><option value="experienced">Experienced</option></select>
+                        </div>
+                        <button class="btn btn-primary" onclick="generateInterview()" id="intGenBtn">🎯 Generate Questions</button>
+                    </div>
+                    <div class="card" id="intResults" style="display:none">
+                        <div class="card-header"><span class="card-title">📋 Interview Preparation Material</span></div>
+                        <div id="intContent" class="ai-response"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Career Guidance Page -->
+            <div class="page-section" id="page-career">
+                <div class="content-header"><div><h2>Career Guidance</h2><p>Get personalized career recommendations</p></div></div>
+                <div class="content-body">
+                    <div class="card" style="margin-bottom:20px">
+                        <div class="card-header"><span class="card-title">Your Profile</span></div>
+                        <div class="grid-2">
+                            <div class="form-group"><label class="form-label">Department</label>
+                                <select class="form-select" id="careerDept"><option value="Computer Science">Computer Science</option><option value="Information Technology">Information Technology</option><option value="Electronics">Electronics</option><option value="Mechanical">Mechanical</option><option value="Civil">Civil</option><option value="Electrical">Electrical</option></select>
+                            </div>
+                            <div class="form-group"><label class="form-label">CGPA</label><input class="form-input" id="careerCgpa" type="number" step="0.1" min="0" max="10" placeholder="8.5"></div>
+                        </div>
+                        <div class="form-group"><label class="form-label">Current Skills (comma separated)</label><input class="form-input" id="careerSkills" placeholder="Python, Machine Learning, SQL"></div>
+                        <div class="form-group"><label class="form-label">Interests (comma separated)</label><input class="form-input" id="careerInterests" placeholder="AI, Web Development, Data Science"></div>
+                        <button class="btn btn-primary" onclick="getCareerGuidance()" id="careerBtn">🧭 Get Career Guidance</button>
+                    </div>
+                    <div class="card" id="careerResults" style="display:none">
+                        <div class="card-header"><span class="card-title">🧭 Career Recommendations</span></div>
+                        <div id="careerContent" class="ai-response"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students Page -->
+            <div class="page-section" id="page-students">
+                <div class="content-header">
+                    <div><h2>Student Management</h2><p>View and manage student records</p></div>
+                    <div class="header-actions"><button class="btn btn-primary" onclick="openModal('addStudentModal')">+ Add Student</button></div>
+                </div>
+                <div class="content-body"><div class="card"><div id="studentsTable"></div></div></div>
+            </div>
+
+            <!-- Companies Page -->
+            <div class="page-section" id="page-companies">
+                <div class="content-header">
+                    <div><h2>Company Management</h2><p>Manage recruitment companies & drives</p></div>
+                    <div class="header-actions"><button class="btn btn-primary" onclick="openModal('addCompanyModal')">+ Add Company</button></div>
+                </div>
+                <div class="content-body"><div class="card"><div id="companiesTable"></div></div></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div class="modal-overlay" id="addStudentModal">
+        <div class="modal">
+            <div class="modal-header"><h3>Add New Student</h3><button class="modal-close" onclick="closeModal('addStudentModal')">×</button></div>
+            <div class="grid-2">
+                <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="sName"></div>
+                <div class="form-group"><label class="form-label">Roll Number</label><input class="form-input" id="sRoll"></div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group"><label class="form-label">Department</label>
+                    <select class="form-select" id="sDept"><option>Computer Science</option><option>Information Technology</option><option>Electronics</option><option>Mechanical</option></select>
+                </div>
+                <div class="form-group"><label class="form-label">CGPA</label><input class="form-input" id="sCgpa" type="number" step="0.1"></div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="sEmail" type="email"></div>
+                <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="sPhone"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Skills (comma separated)</label><input class="form-input" id="sSkills" placeholder="Python, Java, SQL"></div>
+            <div class="grid-2">
+                <div class="form-group"><label class="form-label">10th %</label><input class="form-input" id="sTenth" type="number"></div>
+                <div class="form-group"><label class="form-label">12th %</label><input class="form-input" id="sTwelfth" type="number"></div>
+            </div>
+            <button class="btn btn-primary" onclick="addStudent()" style="width:100%">Add Student</button>
+        </div>
+    </div>
+
+    <!-- Add Company Modal -->
+    <div class="modal-overlay" id="addCompanyModal">
+        <div class="modal">
+            <div class="modal-header"><h3>Add New Company</h3><button class="modal-close" onclick="closeModal('addCompanyModal')">×</button></div>
+            <div class="grid-2">
+                <div class="form-group"><label class="form-label">Company Name</label><input class="form-input" id="cName"></div>
+                <div class="form-group"><label class="form-label">Industry</label><input class="form-input" id="cIndustry"></div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group"><label class="form-label">Job Role</label><input class="form-input" id="cRole"></div>
+                <div class="form-group"><label class="form-label">Package (LPA)</label><input class="form-input" id="cPackage" type="number" step="0.5"></div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group"><label class="form-label">Min CGPA</label><input class="form-input" id="cCgpa" type="number" step="0.1"></div>
+                <div class="form-group"><label class="form-label">Visit Date</label><input class="form-input" id="cDate" type="date"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Required Skills (comma separated)</label><input class="form-input" id="cSkills"></div>
+            <div class="form-group"><label class="form-label">Job Description</label><textarea class="form-textarea" id="cDesc"></textarea></div>
+            <button class="btn btn-primary" onclick="addCompany()" style="width:100%">Add Company</button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

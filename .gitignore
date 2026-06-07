@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pyo
+data/
+backend/uploads/
+.env
+*.db
+venv/
+node_modules/
